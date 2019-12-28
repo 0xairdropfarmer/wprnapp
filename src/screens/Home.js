@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import {
-  TouchableOpacity,
-  View,
-  FlatList,
-  ActivityIndicator,
-} from 'react-native';
+import {Text, View, FlatList,ActivityIndicator, TouchableOpacity} from 'react-native';
 import {
   Avatar,
   Button,
@@ -33,8 +28,9 @@ export class Home extends Component {
         style={{
           paddingVertical: 20,
           borderTopWidth: 1,
-          borderColor: '#CED0CE',
-        }}>
+          borderColor: "#CED0CE"
+        }}
+      >
         <ActivityIndicator animating size="large" />
       </View>
     );
@@ -45,7 +41,7 @@ export class Home extends Component {
     });
   }
   componentDidMount() {
-    this.fetchLastestPost();
+     this.fetchLastestPost();
   }
 
   async fetchLastestPost() {
@@ -73,7 +69,7 @@ export class Home extends Component {
     return (
       <View>
         <Headline style={{marginLeft: 30}}>Lastest Post</Headline>
-
+        
         <FlatList
           data={this.state.lastestpost}
           onRefresh={() => this.onRefresh()}
@@ -82,33 +78,33 @@ export class Home extends Component {
           onEndReachedThreshold={0.1}
           handleLoadMore={this.renderFooter}
           renderItem={({item}) => (
-            <TouchableOpacity
-              onPress={() =>
-                this.props.navigation.navigate('SinglePost', {
-                  post_id: item.id,
-                })
-              }>
-              <Card
-                style={{
-                  shadowOffset: {width: 5, height: 5},
-                  width: '90%',
-                  borderRadius: 12,
-                  alignSelf: 'center',
-                  marginBottom: 10,
-                }}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('SinglePost', {
+                post_id: item.id,
+              })
+            }>
+            <Card
+              style={{
+                shadowOffset: {width: 5, height: 5},
+                width: '90%',
+                borderRadius: 12,
+                alignSelf: 'center',
+                marginBottom: 10,
+              }}>
+              <Card.Content>
+                <Title>{item.title.rendered}</Title>
+                <Paragraph>
+                  Published on {moment(item.date).fromNow()}
+                </Paragraph>
+              </Card.Content>
+              <Card.Cover source={{uri: item.jetpack_featured_media_url}} />
+              <Card.Content>
                 <Card.Content>
-                  <Title>{item.title.rendered}</Title>
-                  <Paragraph>
-                    Published on {moment(item.date).fromNow()}
-                  </Paragraph>
+                  <HTMLRender html={item.excerpt.rendered} />
                 </Card.Content>
-                <Card.Cover source={{uri: item.jetpack_featured_media_url}} />
-                <Card.Content>
-                  <Card.Content>
-                    <HTMLRender html={item.excerpt.rendered} />
-                  </Card.Content>
-                </Card.Content>
-              </Card>
+              </Card.Content>
+            </Card>
             </TouchableOpacity>
           )}
           keyExtractor={(item, index) => index.toString()}
