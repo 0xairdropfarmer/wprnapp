@@ -7,6 +7,7 @@ import Home from './src/screens/Home';
 import Categories from './src/screens/Categories';
 import Setting from './src/screens/Setting';
 import Bookmark from './src/screens/Bookmark';
+import SinglePost from './src/screens/SinglePost';
 const DashboardTabNavigator = createBottomTabNavigator(
   {
     HomePage: {
@@ -52,6 +53,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
 
 const StackNavigator = createStackNavigator({
   DashboardTabNavigator: DashboardTabNavigator,
+  SinglePost:SinglePost
 });
 
 export default createAppContainer(StackNavigator);
