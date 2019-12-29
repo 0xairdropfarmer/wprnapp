@@ -1,5 +1,12 @@
 import React from 'react';
-import {Avatar, withTheme, Card, Title, Paragraph, List} from 'react-native-paper';
+import {
+  Avatar,
+  withTheme,
+  Card,
+  Title,
+  Paragraph,
+  List,
+} from 'react-native-paper';
 import HTML from 'react-native-render-html';
 import {
   View,
@@ -12,8 +19,10 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
-
- class SinglePost extends React.Component {
+import NetInfo from '@react-native-community/netinfo';
+const cacheKey = 'CacheData';
+import NetworkStatus from '../components/NetworkStatus';
+class SinglePost extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,11 +30,20 @@ import moment from 'moment';
       isloading: true,
       post: [],
       already_bookmark: false,
+      offline: false,
     };
   }
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  };
   componentDidMount() {
     this.fetchPost().then(() => {
-      
       this.renderBookMark(this.props.navigation.getParam('post_id'));
     });
   }
@@ -64,15 +82,34 @@ import moment from 'moment';
   };
   async fetchPost() {
     let post_id = this.props.navigation.getParam('post_id');
+    const networkState = await NetInfo.fetch();
 
-    const response = await fetch(
-      `http://kriss.pro/wp-json/wp/v2/posts?_embed&include=${post_id}`,
-    );
-    const post = await response.json();
-    this.setState({
-      post: post,
-      isloading: false,
-    });
+    if (!networkState.isConnected) {
+      const _cachedData = await AsyncStorage.getItem(cacheKey);
+      const cachedData = JSON.parse(_cachedData);
+      console.log(cachedData);
+      if (!cachedData) {
+        alert("You're currently offline and no local data was found.");
+      } else {
+        alert('Your are offline but still have cache data');
+      }
+      let post = cachedData.post.filter(value => value.id === post_id);
+
+      this.setState({
+        post: post,
+        isloading: false,
+        offline: true,
+      });
+    } else {
+      const response = await fetch(
+        `http://kriss.pro/wp-json/wp/v2/posts?_embed&include=${post_id}`,
+      );
+      const post = await response.json();
+      this.setState({
+        post: post,
+        isloading: false,
+      });
+    }
   }
 
   render() {
@@ -96,14 +133,24 @@ import moment from 'moment';
           <Card.Content>
             <Title>{post[0].title.rendered} </Title>
             <List.Item
-              title={`${post[0]._embedded.author[0].name}`}
-              description={`${post[0]._embedded.author[0].description}`}
+              title={`${
+                this.state.offline ? '' : post[0]._embedded.author[0].name
+              }`}
+              description={`${
+                this.state.offline
+                  ? ''
+                  : post[0]._embedded.author[0].description
+              }`}
               left={props => {
                 return (
                   <Avatar.Image
                     size={55}
                     source={{
-                      uri: `${post[0]._embedded.author[0].avatar_urls[96]}`,
+                      uri: `${
+                        this.state.offline
+                          ? ''
+                          : post[0]._embedded.author[0].avatar_urls[96]
+                      }`,
                     }}
                   />
                 );
@@ -114,7 +161,7 @@ import moment from 'moment';
                     onPress={() =>
                       this.onShare(post[0].title.rendered, post[0].link)
                     }>
-                    <FontAwesome name="share" size={30} color={colors.text}/>
+                    <FontAwesome name="share" size={30} color={colors.text} />
                   </TouchableOpacity>
                 );
               }}
@@ -129,14 +176,22 @@ import moment from 'moment';
                   return (
                     <TouchableOpacity
                       onPress={() => this.removeBookMark(post[0].id)}>
-                      <FontAwesome name="bookmark" size={30} color={colors.text}/>
+                      <FontAwesome
+                        name="bookmark"
+                        size={30}
+                        color={colors.text}
+                      />
                     </TouchableOpacity>
                   );
                 } else {
                   return (
                     <TouchableOpacity
                       onPress={() => this.saveBookMark(post[0].id)}>
-                      <FontAwesome name="bookmark-o" size={30} color={colors.text}/>
+                      <FontAwesome
+                        name="bookmark-o"
+                        size={30}
+                        color={colors.text}
+                      />
                     </TouchableOpacity>
                   );
                 }
