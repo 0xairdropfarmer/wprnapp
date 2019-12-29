@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar, Button, Card, Title, Paragraph, List} from 'react-native-paper';
+import {Avatar, withTheme, Card, Title, Paragraph, List} from 'react-native-paper';
 import HTML from 'react-native-render-html';
 import {
   View,
@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 
-export default class SinglePost extends React.Component {
+ class SinglePost extends React.Component {
   constructor(props) {
     super(props);
 
@@ -77,6 +77,7 @@ export default class SinglePost extends React.Component {
 
   render() {
     let post = this.state.post;
+    const {colors} = this.props.theme;
     if (this.state.isloading) {
       return (
         <View
@@ -113,7 +114,7 @@ export default class SinglePost extends React.Component {
                     onPress={() =>
                       this.onShare(post[0].title.rendered, post[0].link)
                     }>
-                    <FontAwesome name="share" size={30} />
+                    <FontAwesome name="share" size={30} color={colors.text}/>
                   </TouchableOpacity>
                 );
               }}
@@ -128,14 +129,14 @@ export default class SinglePost extends React.Component {
                   return (
                     <TouchableOpacity
                       onPress={() => this.removeBookMark(post[0].id)}>
-                      <FontAwesome name="bookmark" size={30} />
+                      <FontAwesome name="bookmark" size={30} color={colors.text}/>
                     </TouchableOpacity>
                   );
                 } else {
                   return (
                     <TouchableOpacity
                       onPress={() => this.saveBookMark(post[0].id)}>
-                      <FontAwesome name="bookmark-o" size={30} />
+                      <FontAwesome name="bookmark-o" size={30} color={colors.text}/>
                     </TouchableOpacity>
                   );
                 }
@@ -151,6 +152,13 @@ export default class SinglePost extends React.Component {
                 width: Dimensions.get('window').width,
                 height: Dimensions.get('window').width * 2,
               }}
+              tagsStyles={{
+                p: {color: colors.text},
+                h1: {color: colors.text},
+                h2: {color: colors.text},
+                h3: {color: colors.text},
+                pre: {color: colors.accent},
+              }}
             />
           </Card.Content>
         </Card>
@@ -158,3 +166,4 @@ export default class SinglePost extends React.Component {
     );
   }
 }
+export default withTheme(SinglePost);
