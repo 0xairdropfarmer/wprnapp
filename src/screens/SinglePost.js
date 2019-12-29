@@ -9,6 +9,7 @@ import {
   Share,
   TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 
@@ -19,17 +20,48 @@ export default class SinglePost extends React.Component {
     this.state = {
       isloading: true,
       post: [],
+      already_bookmark: false,
     };
   }
+  componentDidMount() {
+    this.fetchPost().then(() => {
+      
+      this.renderBookMark(this.props.navigation.getParam('post_id'));
+    });
+  }
+  renderBookMark = async post_id => {
+    await AsyncStorage.getItem('bookmark').then(token => {
+      const res = JSON.parse(token);
+      console.log(res);
+      let data = res.find(value => value === post_id);
+      return data == null
+        ? this.setState({already_bookmark: false})
+        : this.setState({already_bookmark: true});
+    });
+  };
+  saveBookMark = async post_id => {
+    this.setState({already_bookmark: true});
+    await AsyncStorage.getItem('bookmark').then(token => {
+      const res = JSON.parse(token);
+      if (res !== null) {
+        let data = res.find(value => value === post_id);
+        if (data == null) {
+          res.push(post_id);
+          AsyncStorage.setItem('bookmark', JSON.stringify(res));
+        }
+      } else {
+        let bookmark = [];
+        bookmark.push(post_id);
+        AsyncStorage.setItem('bookmark', JSON.stringify(bookmark));
+      }
+    });
+  };
   onShare = async (title, uri) => {
     Share.share({
       title: title,
       url: uri,
     });
   };
-  componentDidMount() {
-    this.fetchPost();
-  }
   async fetchPost() {
     let post_id = this.props.navigation.getParam('post_id');
 
@@ -91,6 +123,23 @@ export default class SinglePost extends React.Component {
                 post[0].date,
                 'YYYYMMDD',
               ).fromNow()}`}
+              right={props => {
+                if (this.state.already_bookmark == true) {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => this.removeBookMark(post[0].id)}>
+                      <FontAwesome name="bookmark" size={30} />
+                    </TouchableOpacity>
+                  );
+                } else {
+                  return (
+                    <TouchableOpacity
+                      onPress={() => this.saveBookMark(post[0].id)}>
+                      <FontAwesome name="bookmark-o" size={30} />
+                    </TouchableOpacity>
+                  );
+                }
+              }}
             />
             <Paragraph />
           </Card.Content>
