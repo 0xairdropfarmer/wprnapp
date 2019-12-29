@@ -9,6 +9,7 @@ import Setting from './src/screens/Setting';
 import Bookmark from './src/screens/Bookmark';
 import SinglePost from './src/screens/SinglePost';
 import CategorieList from './src/screens/CategorieList';
+import Contact from './src/screens/Contact';
 const DashboardTabNavigator = createBottomTabNavigator(
   {
     HomePage: {
@@ -55,7 +56,8 @@ const DashboardTabNavigator = createBottomTabNavigator(
 const StackNavigator = createStackNavigator({
   DashboardTabNavigator: DashboardTabNavigator,
   SinglePost:SinglePost,
-  CategorieList : CategorieList
+  CategorieList : CategorieList,
+  Contact:Contact
 });
 
 export default createAppContainer(StackNavigator);

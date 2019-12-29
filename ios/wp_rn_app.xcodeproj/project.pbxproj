@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1D587F1B73C95E923D4A53C7 /* libPods-wp_rn_app-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C168A3A4640A9003C53A52 /* libPods-wp_rn_app-tvOS.a */; };
 		2185D91B23B126D500E6D47A /* wp_rn_app.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = 2185D91A23B126D500E6D47A /* wp_rn_app.xcworkspace */; };
+		21ADD6EC23B84A180049B898 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 21ADD6EB23B84A180049B898 /* GoogleService-Info.plist */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -53,6 +54,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = wp_rn_app/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = wp_rn_app/main.m; sourceTree = "<group>"; };
 		2185D91A23B126D500E6D47A /* wp_rn_app.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; path = wp_rn_app.xcworkspace; sourceTree = "<group>"; };
+		21ADD6EB23B84A180049B898 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* wp_rn_app-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wp_rn_app-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* wp_rn_app-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "wp_rn_app-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48BD34D55F1A9FF360F19EF9 /* libPods-wp_rn_app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wp_rn_app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 		13B07FAE1A68108700A75B9A /* wp_rn_app */ = {
 			isa = PBXGroup;
 			children = (
+				21ADD6EB23B84A180049B898 /* GoogleService-Info.plist */,
 				2185D91A23B126D500E6D47A /* wp_rn_app.xcworkspace */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -345,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				21ADD6EC23B84A180049B898 /* GoogleService-Info.plist in Resources */,
 				2185D91B23B126D500E6D47A /* wp_rn_app.xcworkspace in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "857893425065",
+    "firebase_url": "https://wprnapp-a42b6.firebaseio.com",
+    "project_id": "wprnapp-a42b6",
+    "storage_bucket": "wprnapp-a42b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857893425065:android:e00e20f2534a65f4867eb8",
+        "android_client_info": {
+          "package_name": "com.wp_rn_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857893425065-05i61s57ho7v0scdgm6h8pujcsqvkb49.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMKcKCy0OC0RwnXlvJEmB_iXULpS069cg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857893425065-05i61s57ho7v0scdgm6h8pujcsqvkb49.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "857893425065-ctbc4luik0ohomg4pjb2vtblggf14e35.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.wp-rn-app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
