@@ -11,6 +11,14 @@ import ContentCard from '../components/ContentCard';
 import NetInfo from '@react-native-community/netinfo';
 import AsyncStorage from '@react-native-community/async-storage';
 const cacheKey = 'CacheData';
+import firebase from 'react-native-firebase';
+const Banner = firebase.admob.Banner;
+const AdRequest = firebase.admob.AdRequest;
+const request = new AdRequest();
+const unitId =
+  Platform.OS === 'ios'
+    ? 'ca-app-pub-2547344479047582/1964568575'
+    : 'ca-app-pub-2547344479047582/3578793688';
 export class Home extends Component {
   constructor(props) {
     super(props);
@@ -47,14 +55,11 @@ export class Home extends Component {
     const networkState = await NetInfo.fetch();
 
     if (!networkState.isConnected) {
-      
       const _cachedData = await AsyncStorage.getItem(cacheKey);
       if (!_cachedData) {
-        alert(
-          "You're currently offline and no local data was found.",
-        );
-      }else{
-        alert('Your are offline but still have cache data')
+        alert("You're currently offline and no local data was found.");
+      } else {
+        alert('Your are offline but still have cache data');
       }
       const cachedData = JSON.parse(_cachedData);
 
@@ -71,7 +76,7 @@ export class Home extends Component {
       this.setState({
         lastestpost: page === 1 ? post : [...this.state.lastestpost, ...post],
         isFetching: false,
-      })
+      });
       await AsyncStorage.setItem(
         cacheKey,
         JSON.stringify({
@@ -95,7 +100,14 @@ export class Home extends Component {
     return (
       <View>
         <Headline style={{marginLeft: 30}}>Lastest Post</Headline>
-
+        <Banner
+          unitId={unitId}
+          size={'SMART_BANNER'}
+          request={request.build()}
+          onAdLoaded={() => {
+            console.log('Advert loaded');
+          }}
+        />
         <FlatList
           data={this.state.lastestpost}
           onRefresh={() => this.onRefresh()}
