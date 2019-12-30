@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import io.invertase.firebase.admob.RNFirebaseAdMobPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
       // packages.add(new MyReactNativePackage());
       packages.add(new RNFirebaseDatabasePackage());
       packages.add(new RNFirebaseAdMobPackage());
+      packages.add(new RNFirebaseMessagingPackage());
       return packages;
     }
 

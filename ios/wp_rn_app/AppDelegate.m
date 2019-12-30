@@ -12,6 +12,7 @@
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
 @import Firebase;
+#import "RNFirebaseNotifications.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -29,12 +30,17 @@
   self.window.rootViewController = rootViewController;
   if ([FIRApp defaultApp] == nil) {
      [FIRApp configure];
+     [RNFirebaseNotifications configure];
    }
+     [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+  
   [RNSplashScreen show];
   [self.window makeKeyAndVisible];
   return YES;
 }
-
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+  [[RNFirebaseNotifications instance] didReceiveLocalNotification:notification];
+}
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
